@@ -787,8 +787,8 @@ var publicMethods = {
 		_currPanBounds = self.currItem.bounds;	
 		_startZoomLevel = _currZoomLevel = self.currItem.initialZoomLevel;
 
-		_panOffset.x = _currPanBounds.center.x;
-		_panOffset.y = _currPanBounds.center.y;
+		_panOffset.x = self.currItem.initialPosition.x;
+		_panOffset.y = self.currItem.initialPosition.y;
 
 		if(emulateSetContent) {
 			_shout('afterChange');
