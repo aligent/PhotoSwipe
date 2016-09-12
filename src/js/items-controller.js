@@ -50,6 +50,23 @@ var _getItemAt,
 		bounds.min.x = (realPanElementW > _tempPanAreaSize.x) ? 0 : bounds.center.x;
 		bounds.min.y = (realPanElementH > _tempPanAreaSize.y) ? item.vGap.top : bounds.center.y;
 	},
+	_setInitialPosition = function(item) {
+		var positionOption = 'position' in _options ? _options.position : null;
+
+		item.initialPosition = item.initialPosition ||  {};
+		item.initialPosition.x = item.bounds.center.x;
+
+		switch (positionOption) {
+			case 'top':
+				item.initialPosition.y = item.bounds.min.y;
+				break;
+			case 'bottom':
+				item.initialPosition.y = item.bounds.max.y;
+				break;
+			default:
+				item.initialPosition.y = item.bounds.center.y;
+		}
+	},
 	_calculateItemSize = function(item, viewportSize, zoomLevel) {
 
 		if (item.src && !item.loadError) {
@@ -101,7 +118,7 @@ var _getItemAt,
 			_calculateSingleItemPanBounds(item, item.w * zoomLevel, item.h * zoomLevel);
 
 			if (isInitial && zoomLevel === item.initialZoomLevel) {
-				item.initialPosition = item.bounds.center;
+				_setInitialPosition(item);
 			}
 
 			return item.bounds;
