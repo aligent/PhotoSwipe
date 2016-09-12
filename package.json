@@ -1,6 +1,6 @@
 {
-  "name": "photoswipe",
-  "version": "4.1.1",
+  "name": "aligent-photoswipe",
+  "version": "4.2.0",
   "engines": {
     "node": ">= 0.8.0"
   },
@@ -24,13 +24,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/dimsemenov/Photoswipe.git"
+    "url": "git://github.com/aligent/Photoswipe.git"
   },
   "description": "JavaScript gallery",
-  "bugs": {
-    "url": "https://github.com/dimsemenov/Photoswipe/issues"
-  },
-  "homepage": "http://photoswipe.com",
   "main": "dist/photoswipe.js",
   "keywords": [
     "gallery",

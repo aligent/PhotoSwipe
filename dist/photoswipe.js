@@ -1,6 +1,6 @@
-/*! PhotoSwipe - v4.1.1 - 2015-12-24
+/*! PhotoSwipe - v4.1.1 - 2016-09-12
 * http://photoswipe.com
-* Copyright (c) 2015 Dmitry Semenov; */
+* Copyright (c) 2016 Dmitry Semenov; */
 (function (root, factory) { 
 	if (typeof define === 'function' && define.amd) {
 		define(factory);
@@ -1085,8 +1085,8 @@ var publicMethods = {
 		_currPanBounds = self.currItem.bounds;	
 		_startZoomLevel = _currZoomLevel = self.currItem.initialZoomLevel;
 
-		_panOffset.x = _currPanBounds.center.x;
-		_panOffset.y = _currPanBounds.center.y;
+		_panOffset.x = self.currItem.initialPosition.x;
+		_panOffset.y = self.currItem.initialPosition.y;
 
 		if(emulateSetContent) {
 			_shout('afterChange');
@@ -2725,6 +2725,23 @@ var _getItemAt,
 		bounds.min.x = (realPanElementW > _tempPanAreaSize.x) ? 0 : bounds.center.x;
 		bounds.min.y = (realPanElementH > _tempPanAreaSize.y) ? item.vGap.top : bounds.center.y;
 	},
+	_setInitialPosition = function(item) {
+		var positionOption = 'position' in _options ? _options.position : null;
+
+		item.initialPosition = item.initialPosition ||  {};
+		item.initialPosition.x = item.bounds.center.x;
+
+		switch (positionOption) {
+			case 'top':
+				item.initialPosition.y = item.bounds.min.y;
+				break;
+			case 'bottom':
+				item.initialPosition.y = item.bounds.max.y;
+				break;
+			default:
+				item.initialPosition.y = item.bounds.center.y;
+		}
+	},
 	_calculateItemSize = function(item, viewportSize, zoomLevel) {
 
 		if (item.src && !item.loadError) {
@@ -2776,7 +2793,7 @@ var _getItemAt,
 			_calculateSingleItemPanBounds(item, item.w * zoomLevel, item.h * zoomLevel);
 
 			if (isInitial && zoomLevel === item.initialZoomLevel) {
-				item.initialPosition = item.bounds.center;
+				_setInitialPosition(item);
 			}
 
 			return item.bounds;
@@ -3409,6 +3426,13 @@ _registerModule('DesktopZoom', {
 		},
 
 		toggleDesktopZoom: function(centerPoint) {
+			if (_options.scaleMode === 'orig') {
+				if (_options.tapToClose === true) {
+					this.close()
+				}
+				return;
+			}
+
 			centerPoint = centerPoint || {x:_viewportSize.x/2 + _offset.x, y:_viewportSize.y/2 + _offset.y };
 
 			var doubleTapZoomLevel = _options.getDoubleTapZoom(true, self.currItem);

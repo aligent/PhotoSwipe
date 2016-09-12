@@ -155,6 +155,13 @@ _registerModule('DesktopZoom', {
 		},
 
 		toggleDesktopZoom: function(centerPoint) {
+			if (_options.scaleMode === 'orig') {
+				if (_options.tapToClose === true) {
+					this.close()
+				}
+				return;
+			}
+
 			centerPoint = centerPoint || {x:_viewportSize.x/2 + _offset.x, y:_viewportSize.y/2 + _offset.y };
 
 			var doubleTapZoomLevel = _options.getDoubleTapZoom(true, self.currItem);

@@ -1,9 +1,9 @@
 {
-  "name": "photoswipe",
-  "repository": "dimsemenov/PhotoSwipe",
+  "name": "aligent-photoswipe",
+  "repository": "aligent/PhotoSwipe",
   "description": "JavaScript gallery",
   "main": "dist/photoswipe.js",
-  "version": "4.1.1",
+  "version": "4.2.0",
   "keywords": [
     "gallery",
     "lightbox",
